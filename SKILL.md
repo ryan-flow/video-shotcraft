@@ -220,6 +220,28 @@ node workbench/scripts/open.mjs <成片工程目录>   # 链接工程 → 起 de
 | 逐镜头实现时写 `src/workbench.ts` 清单 / 镜头 props+schema | workbench.md §2–3（范例 `template/src/workbench.ts`） |
 | 成片交付后（打开动效工作台） | workbench.md（`node workbench/scripts/open.mjs <工程>`；工作台自身文档 `workbench/README.md`） |
 | 成片交付后（剪映工程导出） | jianying-export.md + `jianying-export/` 平台模块 |
+| 片子要旁白/配音/逐句字幕 | narration-tts.md（本地扩展）+ `assets/scripts/tts_edge.py` |
+| 要求“大气/有故事性”或需要 Opus 5.5 社区做法 | opus55-methods-2026-09.md（本地扩展，阶段 0–3 读） |
+| 交镜头稿给用户之前（所有模式） | storyboard-gate.md（本地扩展，卖点台账 + 禁止上镜清单 + 交付格式） |
+| 库内 SFX 不够或需严格等长的补位音效 | `assets/scripts/sfx_synth.py`（本地扩展） |
+
+## 本地扩展（LAVEDA 维护）
+
+上游快照 commit `5ddbf521038b`（2026-09-29）之上的本地改动，清单与同步方法见根目录
+`LOCAL_CHANGES.md`。三条补充硬规则：
+
+1. **旁白片先声后画**：有旁白时先写稿、合成、试听，再按实测时长排 `SHOTS`；字幕与 VO 共用偏移常量；
+   BGM 在人声句内 ducking。见 `references/narration-tts.md` 与审美准则 S6。
+2. **主张台账**：字卡/字幕/旁白里的每个功能或效果主张在设计 spec 里登记来源；无证据的效果词不上屏
+   （审美准则 C4）。
+3. **故事先于镜头**：用户要“大气、有故事性”时，分镜前先答出“主角与难题 / 贯穿全片的那根线 /
+   结尾那一句”，按 `opus55-methods-2026-09.md` §5 的三幕结构排段位，再套 `promo-energy-arc`。
+4. **镜头稿放行门槛**：任何镜头稿交给用户前，按 `references/storyboard-gate.md` 建卖点台账并逐条自检
+   （审美准则 C5）；卖点取自产品方法论原文，手动操作与次要机制不上镜。
+
+Windows 环境补充：项目路径尽量短且避开中文（部分 git/ffmpeg 操作遇长路径或非 ASCII 会失败）；
+Remotion `--props` 必须走 JSON 文件；中文字体用系统微软雅黑或随工程放置的 OFL 字体并在
+`document.fonts.ready` 后渲染。
 
 ## 资产使用方式
 
